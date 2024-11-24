@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Форма обучения</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/logo.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Студенческие группы</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-primary btnlog" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Форма обучения</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Форма обучения</th>
+                        <th scope="col">Редактировать</th>
+                        <th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${forms}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getForm_education_name()}"></td>
+                        <td>
+                            <form action="#" th:action="@{/FormEducation/update}" th:object="${form}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <input name="form_education_name" type="hidden" th:value="${var.getForm_education_name()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/edit.png}"/></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/FormEducation/delete}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/delete.png}"/></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/FormEducation/create}" th:object="${form}">
+                    <h3 style="color: black">Новая запись</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+
+                            <label for="form_education_name" class="col-sm-7 col-form-label" style="color: black">Форма обучения</label>
+                            <input type="text" name="form_education_name" class="form-control" id="form_education_name" th:field="*{form_education_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('form_education_name')}" th:errors="*{form_education_name}"></div>
+
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

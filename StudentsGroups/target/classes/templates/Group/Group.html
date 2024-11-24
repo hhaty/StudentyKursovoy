@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Студенческие группы</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body >
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/logo.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Студенческие группы</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-primary btnlog" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Студенческие группы</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Специальность</th>
+                        <th scope="col">Квалификация</th>
+                        <th scope="col">Форма обучения</th>
+                        <th scope="col">Факультет</th>
+                        <th scope="col">Группа</th>
+                        <th scope="col">Курс</th>
+                        <th scope="col">Кол-во студентов</th>
+                        <th scope="col">Кол-во подгрупп</th>
+                        <th scope="col">Редактировать</th>
+                        <th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${groups}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getSpeciality().getSpeciality_name()}"></td>
+                        <td th:text="${var.getQualification().getQualification_name()}"></td>
+                        <td th:text="${var.getFormEducation().getForm_education_name()}"></td>
+                        <td th:text="${var.getFaculty()}"></td>
+                        <td th:text="${var.getName()}"></td>
+                        <td th:text="${var.getCourse()}"></td>
+                        <td th:text="${var.getStudent_count()}"></td>
+                        <td th:text="${var.getStudent_subgroups()}"></td>
+                        <td>
+                            <form action="#" th:action="@{/Group/update}" th:object="${group}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <input name="faculty" type="hidden" th:value="${var.getFaculty()}"/>
+                                <input name="name" type="hidden" th:value="${var.getName()}"/>
+                                <input name="course" type="hidden" th:value="${var.getCourse()}"/>
+                                <input name="student_count" type="hidden" th:value="${var.getStudent_count()}"/>
+                                <input name="student_subgroups" type="hidden" th:value="${var.getStudent_subgroups()}"/>
+                                <input name="speciality" type="hidden" th:value="${var.getSpeciality().getId()}"/>
+                                <input name="qualification" type="hidden" th:value="${var.getQualification().getId()}"/>
+                                <input name="formEducation" type="hidden" th:value="${var.getFormEducation().getId()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/edit.png}"/></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/Group/delete}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/delete.png}"/></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/Group/create}" th:object="${group}">
+                    <h3 style="color: black">Новая запись</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+
+                            <label for="speciality" class="col-sm-5 col-form-label">Специальность</label>
+                            <div class="col-sm-7">
+                                <select style="width: 200%" th:field="*{speciality.id}" name="speciality" id="speciality"
+                                        class="form-control">
+                                    <option th:value="-1">Выберите специальность</option>
+                                    <option th:each="var : ${specialities}" th:value="${var.getId()}"
+                                            th:text="${var.getSpeciality_name()}"></option>
+                                </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('speciality')}"
+                                     th:errors="*{speciality}"></div>
+                            </div>
+
+                            <label for="qualification" class="col-sm-5 col-form-label">Квалификация</label>
+                            <div class="col-sm-7">
+                                <select style="width: 200%" th:field="*{qualification.id}" name="qualification" id="qualification"
+                                        class="form-control">
+                                    <option th:value="-1">Выберите квалификацию</option>
+                                    <option th:each="var : ${qualifications}" th:value="${var.getId()}"
+                                            th:text="${var.getQualification_name()}"></option>
+                                </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('qualification')}"
+                                     th:errors="*{qualification}"></div>
+                            </div>
+
+                            <label for="formEducation" class="col-sm-5 col-form-label">Форма обучения</label>
+                            <div class="col-sm-7">
+                                <select style="width: 200%" th:field="*{formEducation.id}" name="formEducation" id="formEducation"
+                                        class="form-control">
+                                    <option th:value="-1">Выберите форму обучения</option>
+                                    <option th:each="var : ${forms}" th:value="${var.getId()}"
+                                            th:text="${var.getForm_education_name()}"></option>
+                                </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('formEducation')}"
+                                     th:errors="*{formEducation}"></div>
+                            </div>
+
+                            <label for="faculty" class="col-sm-7 col-form-label" style="color: black">Факультет</label>
+                            <input type="text" name="faculty" class="form-control" id="faculty" th:field="*{faculty}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('faculty')}" th:errors="*{faculty}"></div>
+
+                            <label for="name" class="col-sm-7 col-form-label" style="color: black">Группа</label>
+                            <input type="text" name="name" class="form-control" id="name" th:field="*{name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+                            <label for="course" class="col-sm-7 col-form-label" style="color: black">Курс</label>
+                            <input type="text" name="course" class="form-control" id="course" th:field="*{course}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('course')}" th:errors="*{course}"></div>
+
+                            <label for="student_count" class="col-sm-7 col-form-label" style="color: black">Кол-во студентов</label>
+                            <input type="text" name="student_count" class="form-control" id="student_count" th:field="*{student_count}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('student_count')}" th:errors="*{student_count}"></div>
+
+                            <label for="student_subgroups" class="col-sm-7 col-form-label" style="color: black">Кол-во подгрупп</label>
+                            <input type="text" name="student_subgroups" class="form-control" id="student_subgroups" th:field="*{student_subgroups}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('student_subgroups')}" th:errors="*{student_subgroups}"></div>
+
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

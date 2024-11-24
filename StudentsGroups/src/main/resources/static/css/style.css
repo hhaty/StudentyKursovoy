@@ -1,0 +1,102 @@
+.snav{
+    background: #b36423;
+}
+.whitetext{
+    color: white;
+}
+.black-text{
+    color: black;
+}
+.item{
+    background: #b36423;
+    font-size: 22px;
+    /*max-width: 400px;*/
+    border-bottom: 2px solid #2f3130;
+}
+.item:hover{
+    background: #9c571f;
+}
+.hrefitem:hover{
+    color: white;
+}
+.hrefitem{
+    color: white;
+}
+.bodys {
+    margin: 0;
+    background: #2f3130;
+    color: #fff;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+.html{background: #6c6c6c;}
+.btnlog{
+    background: #b26323;
+    border: transparent 3px solid;
+    border-radius: 10px;
+    font-size: 17px;
+}
+.btnlog:hover{
+    background: #9c571f;
+    border: #e38449 3px inset;
+    font-size: 17px
+}
+.createac{
+    color: black;
+}
+.createac:hover{
+    color: #b15e23;
+}
+.auth{
+    /*background: #178fb4;*/
+    /*border: 45px solid #178fb4;*/
+    /*border-radius: 30px;*/
+    max-width: 400px;
+}
+.btn-menu{
+    background: transparent;
+    border: transparent;
+    color: white;
+    font-size: 25px;
+    transition: background 1s;
+}
+.btn-menu:hover{
+    background: rgb(155, 93, 31);
+    font-size: 25px;
+    color: white;
+    transition: background 1s;
+}
+.table-bord{
+    border: 2px solid #b26323;
+}
+
+.btn-add{
+    background: #b26323;
+    border: transparent 3px solid;
+    border-radius: 10px;
+    font-size: 25px;
+    color: white;
+}
+
+.btn-add:hover{
+    background: #9c571f;
+    border: #e38449 3px inset;
+    font-size: 25px
+}
+.btn-edits{
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+.btn-edits:hover{
+    background-color: rgba(198, 198, 198, 0.24);
+    border: 1px solid transparent;
+}
+.btn-delete{
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+.btn-delete:hover{
+    background-color: rgba(198, 198, 198, 0.24);
+    border: 1px solid transparent;
+}

@@ -1,0 +1,104 @@
+При создании бд даем название StudentGroups
+
+CREATE TABLE IF NOT EXISTS public.speciality
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    speciality_name text COLLATE pg_catalog."default" NOT NULL,
+    profile text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT speciality_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.speciality
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.qualification
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    qualification_name text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT qualification_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.qualification
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.form_education
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    form_education_name text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "formEducation_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.form_education
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.group_students
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    speciality_id bigint NOT NULL,
+    qualification_id bigint NOT NULL,
+    form_education_id bigint NOT NULL,
+    faculty text COLLATE pg_catalog."default" NOT NULL,
+    name text COLLATE pg_catalog."default" NOT NULL,
+    course integer NOT NULL,
+    student_count integer NOT NULL,
+    student_subgroups integer NOT NULL,
+    CONSTRAINT group_pkey PRIMARY KEY (id),
+    CONSTRAINT form_key FOREIGN KEY (form_education_id)
+        REFERENCES public.form_education (id) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+    CONSTRAINT qual_key FOREIGN KEY (qualification_id)
+        REFERENCES public.qualification (id) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE,
+    CONSTRAINT speciality_key FOREIGN KEY (speciality_id)
+        REFERENCES public.speciality (id) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.group_students
+    OWNER to postgres;
+
+CREATE TABLE IF NOT EXISTS public.user_model
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    username text COLLATE pg_catalog."default" NOT NULL,
+    password text COLLATE pg_catalog."default" NOT NULL,
+    email text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT user_model_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.user_model
+    OWNER to postgres;
+
+INSERT INTO public.speciality(speciality_name, profile)
+	VALUES ('Информацинные системы и технологии', 'Информационные системы и технологии в бизнесе'),
+	('Прикладная информатика', 'Прикладная информатика в экономике');
+
+INSERT INTO public.qualification(qualification_name)
+	VALUES ('Бакалавриат'),
+	('Специалитет'),
+	('Магистратура'),
+	('Аспирантура');
+
+INSERT INTO public.form_education(form_education_name)
+	VALUES ('Очно'),
+	('Очно-заочно'),
+	('Заочно');
+
+INSERT INTO public.group_students(speciality_id, qualification_id, form_education_id, faculty, name, course, student_count, student_subgroups)
+	VALUES (1, 1, 1, 'КТиИБ', 'ИСТ-341', 4, 19, 2),
+	(1, 1, 1, 'КТиИБ', 'ИСТ-342', 4, 16, 2),
+	(2, 1, 1, 'КТиИБ', 'ПИ-341', 4, 21, 2),
+	(2, 1, 1, 'КТиИБ', 'ПИ-342', 4, 18, 2);

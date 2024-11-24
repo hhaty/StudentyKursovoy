@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html style=" height: 100%;">
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Направления подготовки</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-light snav">
+        <div class="container-fluid snav">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/img/logo.png}" alt="" width="80" height="80"/>
+            </a>
+            <h2 class="whitetext">Студенческие группы</h2>
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-primary btnlog" style="margin-left: 10px" th:text="${account}" type="submit"></button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row justify-content-start ">
+            <div class="col-8 border bg-light px-4">
+                <h3 class="text-dark">Направления подготовки</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Направление</th>
+                        <th scope="col">Профиль</th>
+                        <th scope="col">Редактировать</th>
+                        <th scope="col">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="var : ${specialities}">
+                        <td th:text="${var.getId()}"></td>
+                        <td th:text="${var.getSpeciality_name()}"></td>
+                        <td th:text="${var.getProfile()}"></td>
+                        <td>
+                            <form action="#" th:action="@{/Speciality/update}" th:object="${speciality}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <input name="speciality_name" type="hidden" th:value="${var.getSpeciality_name()}"/>
+                                <input name="profile" type="hidden" th:value="${var.getProfile()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/edit.png}"/></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="#" th:action="@{/Speciality/delete}" th:object="${var}" method="post">
+                                <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                <button type="submit" class="btn btn-outline-primary"><img th:src="@{/img/delete.png}"/></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 border px-4">
+                <form method="POST" th:action="@{/Speciality/create}" th:object="${speciality}">
+                    <h3 style="color: black">Новая запись</h3>
+                    <div class="mb-3">
+                        <div class="col-sm-6">
+
+                            <label for="speciality_name" class="col-sm-5 col-form-label" style="color: black">Направление</label>
+                            <input type="text" name="speciality_name" class="form-control" id="speciality_name" th:field="*{speciality_name}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('speciality_name')}" th:errors="*{speciality_name}"></div>
+
+                            <label for="profile" class="col-sm-5 col-form-label" style="color: black">Профиль</label>
+                            <input type="text" name="profile" class="form-control" id="profile" th:field="*{profile}"/>
+                            <div class="alert alert-warning" th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}"></div>
+
+                        </div>
+                    </div>
+                    <p>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <br>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
