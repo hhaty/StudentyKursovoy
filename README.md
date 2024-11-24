@@ -24,9 +24,12 @@
 4 Необходимо создать аутентификацию пользователей, защиту веб-
 запросов и безопасность на уровне методов.
 
-![image](https://github.com/user-attachments/assets/56880858-3162-419f-9cbd-363227289224)
+![image](https://github.com/user-attachments/assets/0a357d1c-4898-4a96-808c-3d527a17288f)
 
-![image](https://github.com/user-attachments/assets/82ffc09c-eb31-462c-b29c-1ac995b58c2d)
+![image](https://github.com/user-attachments/assets/d004a4c6-7b72-43bd-a980-f9fbb1ac9152)
 
-![image](https://github.com/user-attachments/assets/8627f08c-0220-4295-9cab-cc72ace874a4)
+![image](https://github.com/user-attachments/assets/2e16442f-dd71-45b6-bc41-fc9d21a45b07)
+
+
+
 
